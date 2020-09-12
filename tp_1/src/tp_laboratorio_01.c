@@ -2,7 +2,7 @@
  ============================================================================
  Name        : tp_laboratorio_01.c
  Author      : Pazos Ezequiel
- Version     : 1.0.0
+ Version     : 1.0.1
  Copyright   : Your copyright notice
  Description : Trabajo practico 1 de Laboratorio
  ============================================================================
@@ -25,8 +25,8 @@ int main()
 	float resultadoResta;
 	float resultadoDivision;
 	float resultadoMultiplicacion;
-	float resultadoFactorialUno;
-	float resultadoFactorialDos;
+	int resultadoFactorialUno;
+	int resultadoFactorialDos;
 	int flagOperandoUno = 0;
 	int flagOperandoDos = 0;
 	int flagCalculos = 0;
@@ -86,7 +86,7 @@ int main()
 					resultadoFactorialUno = factorear(operandoUno);
 					resultadoFactorialDos = factorear(operandoDos);
 					flagCalculos = 1;
-					printf("\n «Las operaciones fueron realizadas con exito!»\n\n");
+					printf("\n Las operaciones fueron realizadas con exito!\n\n");
 					system("pause");
 				}else
 				{
@@ -107,28 +107,28 @@ int main()
 						system("pause");
 					}else
 					{
-						printf("\n«El resultado de %.2f + %.2f es: %.2f»\n", operandoUno, operandoDos, resultadoSuma); //mostrar resultados
-						printf("«El resultado de %.2f - %.2f es: %.2f»\n", operandoUno, operandoDos, resultadoResta);
+						printf("\nEl resultado de %.2f + %.2f es: %.2f\n", operandoUno, operandoDos, resultadoSuma); //mostrar resultados
+						printf("El resultado de %.2f - %.2f es: %.2f\n", operandoUno, operandoDos, resultadoResta);
 						if(operandoDos == 0) //validacion division
 						{
-							printf("«Error: No se puede dividir por 0!»\n");
+							printf("Error: No se puede dividir por 0!\n");
 						}else
 						{
-							printf("«El resultado de %.2f / %.2f es: %.2f»\n", operandoUno, operandoDos, resultadoDivision);
+							printf("El resultado de %.2f / %.2f es: %.2f\n", operandoUno, operandoDos, resultadoDivision);
 						}
 
-						printf("«El resultado de %.2f * %.2f es: %.2f»\n", operandoUno, operandoDos, resultadoMultiplicacion);
+						printf("El resultado de %.2f * %.2f es: %.2f\n", operandoUno, operandoDos, resultadoMultiplicacion);
 						if(resultadoFactorialUno == -1) //validacion factorial
 						{
-							printf("«Error: No se puede factorear el 1er operando.»\n");
+							printf("Error: No se puede factorear el 1er operando.\n");
 						}else
 						{
 							if(resultadoFactorialDos == -1) //validacion factorial
 							{
-								printf("«Error: No se puede factorear el 2do operando.»\n");
+								printf("Error: No se puede factorear el 2do operando.\n");
 							}else
 							{
-								printf("«El factorial de %.2f es: %.2f y El factorial de %.2f es: %.2f»\n", operandoUno, resultadoFactorialUno, operandoDos, resultadoFactorialDos);
+								printf("El factorial de %.0f es: %d y El factorial de %.0f es: %d\n", operandoUno, resultadoFactorialUno, operandoDos, resultadoFactorialDos);
 							}
 						}
 						system("pause");
@@ -136,13 +136,13 @@ int main()
 				}
 				break;
 			case 5:
-				printf("\n«Confirma que quiere salir? Ingrese s/n»\n"); //confirmacion si quiere salir
+				printf("\nConfirma que quiere salir? Ingrese s/n\n"); //confirmacion si quiere salir
 				fflush(stdin);
 				scanf("%c", &confirma);
 				confirma = tolower(confirma);
 				while(confirma !='s' && confirma !='n')
 				{
-					printf("«Respuesta invalida. Ingrese s/n»\n"); //validacion  de la confirmacion
+					printf("Respuesta invalida. Ingrese s/n\n"); //validacion  de la confirmacion
 					fflush(stdin);
 					scanf("%c", &confirma);
 					confirma = tolower(confirma);
@@ -153,7 +153,8 @@ int main()
 				}
 				break;
 			default:
-				printf("La opcion ingresada no existe!»"); //validacion de las opciones disponibles
+				printf("\nLa opcion ingresada no existe!\n\n"); //validacion de las opciones disponibles
+				system("pause");
 		}
 
 	}while(seguir == 's');

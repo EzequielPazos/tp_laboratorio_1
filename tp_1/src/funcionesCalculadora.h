@@ -45,8 +45,8 @@ float dividir(float a, float b);
 float multiplicar(float a, float b);
 
 /**
- * @brief factorea el numero flotante ingresado y verifica si el numero ingresado es negativo
+ * @brief factorea el numero ingresado y verifica si el numero ingresado es negativo
  * @param valor a factorear
  * @return devuelve -1 si el numero ingresado era negativo o devuelve el factorial resuelto si era >=0
  */
-float factorear(float a);
+int factorear(int a);

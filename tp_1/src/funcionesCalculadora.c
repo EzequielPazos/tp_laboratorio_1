@@ -25,9 +25,9 @@ float multiplicar(float a, float b)
 	return(a * b);
 }
 
-float factorear(float a)
+int factorear(int a)
 {
-	float factorial;
+	int factorial;
 
     if(a < 0)
     {
