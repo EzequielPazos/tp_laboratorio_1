@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "arrayEmployees.h"
 
 int showMenu()
 {
@@ -22,6 +23,7 @@ int showMenu()
 	printf("4 ---> Informar\n");
 	printf("5 ---> Salir\n\n");
 	printf("Ingrese la opcion deseada: ");
+	scanf("%d", &option);
 
 	return option;
 }
@@ -63,39 +65,24 @@ lastName[],float salary,int sector)
 {
 	int error = -1; //falla
 	int index;
+
 	Employee newEmployee;
 
 	if(list !=NULL && len>0 && id>0)
 	{
-		system("cls");
-		printf("*** ALTA DE EMPLEADOS ***");
 		index = findEmpty(list, len);
 
-		if(index == -1) //error del indice
-		{
-			printf("El sistema esta completo");
-		}else
-		{
-			newEmployee.id = id;
-			newEmployee.isEmpty = 0;
-			printf("Ingrese nombre: "); //FALTA VALIDAR INGRESO DE DATOS
-			fflush(stdin);
-			gets(newEmployee.name);
+		strcpy(newEmployee.name, name);
+		strcpy(newEmployee.lastName, lastName);
+		newEmployee.salary = salary;
+		newEmployee.sector = sector;
 
-			printf("Ingrese apellido: ");
-			fflush(stdin);
-			gets(newEmployee.lastName);
+		newEmployee.id = id;
+		newEmployee.isEmpty = 0;
 
-			printf("Ingrese salario: ");
-			scanf("%f", &newEmployee.salary);
+		error = 0;
 
-			printf("Ingrese sector: ");
-			scanf("%d", &newEmployee.sector);
-
-			printf("Usted ha sido ingresado al sistema con exito!");
-
-			error = 0;
-		}
+		list[index] = newEmployee;
 	}
 
 	return error;
@@ -210,7 +197,7 @@ int modifyEmployee(Employee* list, int len)
 		system("cls");
 		printf("   *** MODIFICAR EMPLEADO ***   \n\n");
 		printEmployees(list, len);
-		printf("Ingrese el ID: ");
+		printf("Ingrese el ID del usuario a modificar: ");
 		scanf("%d", &id);
 
 		index = findEmployeeById(list, len, id);
@@ -277,105 +264,42 @@ int modifyEmployee(Employee* list, int len)
 int sortEmployees(Employee* list, int len, int order)
 {
 	int error = -1;
-	int auxInt;
-	float auxFloat;
-	char auxEmployee[51];
+	int flagSwap;
+	Employee buffer;
 
-	if(list != NULL && len > 0 && order >= 0 && order <= 1)
+	if(list != NULL && len > 0)
 	{
-		for(int i=0; i<len-1; i++)
-		{
-			for(int j=i+1; j<len; j++)
+		do{
+			flagSwap = 0;
+			for(int i=0; i<len-1; i++)
 			{
-				if(list[i].sector > list[j].sector && order)
+				if(list[i].sector > list[i+1].sector && order)
 				{
-					strcpy(auxEmployee, list[i].lastName);
-					strcpy(list[i].lastName, list[j].lastName);
-					strcpy(list[j].lastName, auxEmployee);
-
-					strcpy(auxEmployee, list[i].name);
-					strcpy(list[i].name, list[j].name);
-					strcpy(list[j].name, auxEmployee);
-
-					auxInt = list[i].id;
-					list[i].id = list[j].id;
-					list[j].id = auxInt;
-
-					auxFloat = list[i].salary;
-					list[i].salary = list[j].salary;
-					list[j].salary = auxFloat;
-
-					auxInt = list[i].sector;
-					list[i].sector = list[j].sector;
-					list[j].sector = auxInt;
+					flagSwap = 1;
+					buffer = list[i];
+					list[i] = list[i+1];
+					list[i+1]=buffer;
 				}
-				else if(list[i].sector < list[j].sector && !order)
+				else if(list[i].sector < list[i+1].sector && !order)
 				{
-					strcpy(auxEmployee, list[i].lastName);
-					strcpy(list[i].lastName, list[j].lastName);
-					strcpy(list[j].lastName, auxEmployee);
-
-					strcpy(auxEmployee, list[i].name);
-					strcpy(list[i].name, list[j].name);
-					strcpy(list[j].name, auxEmployee);
-
-					auxInt = list[i].id;
-					list[i].id = list[j].id;
-					list[j].id = auxInt;
-
-					auxFloat = list[i].salary;
-					list[i].salary = list[j].salary;
-					list[j].salary = auxFloat;
-
-					auxInt = list[i].sector;
-					list[i].sector = list[j].sector;
-					list[j].sector = auxInt;
-				}else if(list[i].sector == list[j].sector && strcmp(list[i].lastName, list[j].lastName)>0 && order)
-				{
-					strcpy(auxEmployee, list[i].lastName);
-					strcpy(list[i].lastName, list[j].lastName);
-					strcpy(list[j].lastName, auxEmployee);
-
-					strcpy(auxEmployee, list[i].name);
-					strcpy(list[i].name, list[j].name);
-					strcpy(list[j].name, auxEmployee);
-
-					auxInt = list[i].id;
-					list[i].id = list[j].id;
-					list[j].id = auxInt;
-
-					auxFloat = list[i].salary;
-					list[i].salary = list[j].salary;
-					list[j].salary = auxFloat;
-
-					auxInt = list[i].sector;
-					list[i].sector = list[j].sector;
-					list[j].sector = auxInt;
-				}else if(list[i].sector == list[j].sector && strcmp(list[i].lastName, list[j].lastName)>0 && !order)
-				{
-					strcpy(auxEmployee, list[i].lastName);
-					strcpy(list[i].lastName, list[j].lastName);
-					strcpy(list[j].lastName, auxEmployee);
-
-					strcpy(auxEmployee, list[i].name);
-					strcpy(list[i].name, list[j].name);
-					strcpy(list[j].name, auxEmployee);
-
-					auxInt = list[i].id;
-					list[i].id = list[j].id;
-					list[j].id = auxInt;
-
-					auxFloat = list[i].salary;
-					list[i].salary = list[j].salary;
-					list[j].salary = auxFloat;
-
-					auxInt = list[i].sector;
-					list[i].sector = list[j].sector;
-					list[j].sector = auxInt;
-				}
+					if(list[i].sector == list[i+1].sector && strcmp(list[i].lastName, list[i+1].lastName)>0 && order)
+					{
+						flagSwap = 1;
+						buffer = list[i];
+						list[i] = list[i+1];
+						list[i+1]=buffer;
+					}else if(list[i].sector == list[i+1].sector && strcmp(list[i].lastName, list[i+1].lastName)>0 && !order)
+					{
+						flagSwap = 1;
+						buffer = list[i];
+						list[i] = list[i+1];
+						list[i+1]=buffer;
+					}
+			    }
 			}
-		}
-		error = 0;
+			len--;
+			error = 0;
+		}while(flagSwap);
 	}
 	return error;
 }
